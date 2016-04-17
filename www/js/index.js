@@ -20,6 +20,7 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
+        console.log('Init phase');
     },
     // Bind Event Listeners
     //
@@ -27,6 +28,7 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        console.log('Binding events phase');
     },
     // deviceready Event Handler
     //
@@ -34,6 +36,36 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        console.log('CV> Device is ready phase');
+        navigator.notification.alert( "First time is ok", null,"Alert Test", "OK!");
+        $("#alertTest").click(function () {
+             navigator.notification.alert( "First time is ok", null,"Alert Test", "OK!");
+        });
+
+        $("#confirmTest").click(function () {
+
+                function youConfirmed(idx) {
+                    navigator.notification.alert("You clicked button "+idx+"!", null);
+                }
+                navigator.notification.confirm("Cordova is awesome.", youConfirmed,"Confirm This", ["Yes","No","Maybe"]);
+
+        });
+
+        $("#promptTest").click(function () {
+                function promptAnswer(answer) {
+                    navigator.notification.alert("You said: "+answer.input1, null);
+                }
+                    navigator.notification.prompt("What is your favorite food?", promptAnswer,"Question", ["Ok"], "Cookies");
+           
+        });
+        
+        $("#beepTest").click(function () {
+            navigator.notification.beep(2);
+        });
+        
+        
+       
+
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -46,6 +78,39 @@ var app = {
 
         console.log('Received Event: ' + id);
     }
+    
+  
+    
 };
 
 app.initialize();
+
+/*
+ document.addEventListener("deviceready", init, false);
+
+            //listen for button clicks
+            document.querySelector("#alertTest").addEventListener("touchend",
+            function() {
+                navigator.notification.alert("This is a test...", null,"Alert Test", "OK!");
+            }, false);
+            
+            document.querySelector("#confirmTest").addEventListener("clicked",
+            function() {
+                function youConfirmed(idx) {
+                    navigator.notification.alert("You clicked button "+idx+"!", null);
+                }
+                navigator.notification.confirm("Cordova is awesome.", youConfirmed,"Confirm This", ["Yes","No","Maybe"]);
+            }, false);
+
+            document.querySelector("#promptTest").addEventListener("touchend",
+                function() {function promptAnswer(answer) {
+                    navigator.notification.alert("You said: "+answer.input1, null);
+                }
+                    navigator.notification.prompt("What is your favorite food?", promptAnswer,"Question", ["Ok"], "Cookies");
+            }, false);
+            
+            document.querySelector("#beepTest").addEventListener("touchend",
+                function() {
+                navigator.notification.beep(2);
+            }, false);
+*/
